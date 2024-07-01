@@ -77,7 +77,9 @@ jobs:
         uses: ncipollo/release-action@v1
         if: steps.create_tag.outputs.successful
         with:
+          allowUpdates: true
           artifacts: '.deploy/linux-command.docset.tgz'
+          draft: false
           token: ${{ secrets.GITHUB_TOKEN }}
           name: ${{ steps.create_tag.outputs.version }}
           tag: ${{ steps.create_tag.outputs.version }}
@@ -122,7 +124,7 @@ jobs:
       - run: rm -rf .deploy/linux-command.docset 
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           commit_message: '[${{steps.tag_version.outputs.tag}}] ${{ github.event.head_commit.message }}'
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -146,7 +148,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push image:latest
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
           push: true
           context: .
@@ -154,7 +156,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USER }}/linux-command:latest
 
       - name: Build and push image:tags
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         if: steps.create_tag.outputs.successful
         with:
           push: true
@@ -171,7 +173,7 @@ jobs:
       #     password: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Build and push image:latest
-      #   uses: docker/build-push-action@v3
+      #   uses: docker/build-push-action@v6
       #   with:
       #     push: true
       #     context: .
@@ -179,7 +181,7 @@ jobs:
       #     tags: ghcr.io/jaywcjlove/linux-command:latest
 
       # - name: Build and push image:tags
-      #   uses: docker/build-push-action@v3
+      #   uses: docker/build-push-action@v6
       #   if: steps.create_tag.outputs.successful
       #   with:
       #     push: true
