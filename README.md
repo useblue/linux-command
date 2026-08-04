@@ -91,6 +91,7 @@
 
 **推荐使用的镜像 web 版本**
 
+[**`linux.zenroly.com`**](https://linux.zenroly.com)
 [**`itool123.cn`**](https://linux.itool123.cn)
 [**`235978.xyz`**](https://linux-command.235978.xyz)
 [**`hycer.cn`**](https://linux.hycer.cn)
