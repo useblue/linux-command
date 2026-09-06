@@ -164,6 +164,11 @@
     "p": "/bc",
     "d": "算术操作精密运算工具"
   },
+  "beep": {
+    "n": "beep",
+    "p": "/beep",
+    "d": "用于控制 PC 扬声器发出蜂鸣声的命令行工具。"
+  },
   "bg": {
     "n": "bg",
     "p": "/bg",
@@ -932,7 +937,7 @@
   "groupmod": {
     "n": "groupmod",
     "p": "/groupmod",
-    "d": "更改群组识别码或名称"
+    "d": "修改系统上的组定义"
   },
   "groups": {
     "n": "groups",
@@ -1273,6 +1278,11 @@
     "n": "killall",
     "p": "/killall",
     "d": "使用进程的名称来杀死一组进程"
+  },
+  "l2ping": {
+    "n": "l2ping",
+    "p": "/l2ping",
+    "d": "收发 L2CAP 回显请求，用于检查与目标蓝牙设备的连通性。"
   },
   "last": {
     "n": "last",
@@ -1704,6 +1714,11 @@
     "p": "/nc",
     "d": "nc是网络工具中的瑞士军刀"
   },
+  "ncdu": {
+    "n": "ncdu",
+    "p": "/ncdu",
+    "d": "磁盘使用情况的交互式查看工具，可视为 du 的增强版本"
+  },
   "ncftp": {
     "n": "ncftp",
     "p": "/ncftp",
@@ -1768,6 +1783,11 @@
     "n": "nmcli",
     "p": "/nmcli",
     "d": "地址配置工具"
+  },
+  "nmtui": {
+    "n": "nmtui",
+    "p": "/nmtui",
+    "d": "基于文本的用户界面（TUI），用于控制和配置 NetworkManager。"
   },
   "nohup": {
     "n": "nohup",
@@ -2093,6 +2113,11 @@
     "n": "readonly",
     "p": "/readonly",
     "d": "标记shell变量或函数为只读"
+  },
+  "realpath": {
+    "n": "realpath",
+    "p": "/realpath",
+    "d": "解析并规范化文件路径，返回绝对路径。"
   },
   "reboot": {
     "n": "reboot",
