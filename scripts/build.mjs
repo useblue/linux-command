@@ -7,22 +7,28 @@ import { create } from 'markdown-to-html-cli';
 import _ from 'colors-cli/toxic';
 
 const deployDir = path.resolve(process.cwd(), '.deploy');
-const faviconPath = path.resolve(process.cwd(), 'template', 'img', 'favicon.ico');
+const templateImgDir = path.resolve(process.cwd(), 'template', 'img');
 const rootIndexJSPath = path.resolve(process.cwd(), 'template', 'js', 'index.js');
 const dataJsonPath = path.resolve(process.cwd(), 'dist', 'data.json');
 const dataJsonMinPath = path.resolve(process.cwd(), 'dist', 'data.min.json');
 const cssPath = path.resolve(deployDir, 'css', 'index.css');
 const contributorsPath = path.resolve(process.cwd(), 'CONTRIBUTORS.svg');
 
+function sanitizeCommandName(value) {
+  return String(value || '')
+    .replace(/^\uFEFF/, '')
+    .replace(/[\u200B-\u200D\u2060]/g, '')
+    .trim();
+}
+
 ;(async () => {
   try {
     await FS.ensureDir(deployDir);
     await FS.emptyDir(deployDir);
-    await FS.ensureDir(path.resolve(deployDir, 'img'));
     await FS.ensureDir(path.resolve(deployDir, 'js'));
     await FS.ensureDir(path.resolve(deployDir, 'css'));
     await FS.ensureDir(path.resolve(deployDir, 'c'));
-    await FS.copySync(faviconPath, path.resolve(deployDir, 'img', 'favicon.ico'));
+    await FS.copySync(templateImgDir, path.resolve(deployDir, 'img'));
     
     await FS.copyFile(path.resolve(process.cwd(), 'template', 'js', 'copy-to-clipboard.js'), path.resolve(deployDir, 'js', 'copy-to-clipboard.js'));
     await FS.copyFile(path.resolve(process.cwd(), 'node_modules/@wcj/dark-mode/main.js'), path.resolve(deployDir, 'js', 'dark-mode.min.js'));
@@ -152,6 +158,7 @@ const contributorsPath = path.resolve(process.cwd(), 'CONTRIBUTORS.svg');
         let title = str.match(/[^===]+(?=[===])/g);
         title = title[0] ? title[0].replace(/\n/g, '') : title[0];
         title = title.replace(/\r/, '')
+        title = sanitizeCommandName(title)
         // 命令名称
         json["n"] = title;
         // 命令路径
@@ -187,13 +194,15 @@ const contributorsPath = path.resolve(process.cwd(), 'CONTRIBUTORS.svg');
       const current_path = toPath.replace(new RegExp(`${deployDir}`), '');
       const tmpStr = await FS.readFile(fromPath);
       let mdPathName = '';
+      let mdFileName = '';
       let mdhtml = '';
       let relative_path = '';
       if (mdPath) {
         // CSS/JS 引用相对地址
         relative_path = '../';
-        mdPathName = `/command/${desJson.n}.md`;
-        const READMESTR = await FS.readFile(path.resolve(mdPath, `${desJson.n}.md`));
+        mdFileName = (desJson.p ? String(desJson.p).replace(/^\//, '') : sanitizeCommandName(desJson.n));
+        mdPathName = `/command/${mdFileName}.md`;
+        const READMESTR = await FS.readFile(path.resolve(mdPath, `${mdFileName}.md`));
         mdhtml = await markdownToHTML(READMESTR.toString());
       }
       // 生成 HTML
